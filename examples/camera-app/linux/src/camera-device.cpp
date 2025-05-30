@@ -331,22 +331,8 @@ GstElement * CameraDevice::CreateVideoPipeline(const std::string & device, int w
     {
         ChipLogError(Camera, "Not all elements could be created.");
 
-        if (pipeline)
-            gst_object_unref(pipeline);
-        if (source)
-            gst_object_unref(source);
-        if (capsfilter)
-            gst_object_unref(capsfilter);
-        if (videoconvert)
-            gst_object_unref(videoconvert);
-        if (jpegdec)
-            gst_object_unref(jpegdec);
-        if (x264enc)
-            gst_object_unref(x264enc);
-        if (rtph264pay)
-            gst_object_unref(rtph264pay);
-        if (udpsink)
-            gst_object_unref(udpsink);
+        // Unreference the elements that were created
+        unrefGstElements(pipeline, source, capsfilter, jpegdec, videoconvert, x264enc, rtph264pay, udpsink);
 
         error = CameraError::ERROR_INIT_FAILED;
         return nullptr;
@@ -409,20 +395,8 @@ GstElement * CameraDevice::CreateAudioPipeline(const std::string & device, int c
     {
         ChipLogError(Camera, "Not all elements could be created.");
 
-        if (pipeline)
-            gst_object_unref(pipeline);
-        if (source)
-            gst_object_unref(source);
-        if (capsfilter)
-            gst_object_unref(capsfilter);
-        if (audioconvert)
-            gst_object_unref(audioconvert);
-        if (opusenc)
-            gst_object_unref(opusenc);
-        if (rtpopuspay)
-            gst_object_unref(rtpopuspay);
-        if (udpsink)
-            gst_object_unref(udpsink);
+        // Unreference the elements that were created
+        unrefGstElements(pipeline, source, capsfilter, audioconvert, opusenc, rtpopuspay, udpsink);
 
         error = CameraError::ERROR_INIT_FAILED;
         return nullptr;
